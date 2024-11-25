@@ -4,6 +4,7 @@ from flask import g, request
 
 def mod_start(mysql):
 
+    # Inicializa o aplicativo para cada rota acessada
     # Setup do MySQL para corrigir acentuação
     cur = mysql.connection.cursor()
     cur.execute("SET NAMES utf8mb4")
