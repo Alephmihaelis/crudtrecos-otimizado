@@ -43,11 +43,11 @@ def start():
         # Se o cookie existe, Converte o valor dele de JSON para dicionário
         g.usuario = json.loads(cookie)
     else:
-        # Se o cookie não existe, a variável do ususário está vazia
+        # Se o cookie não existe, a variável do usuário está vazia
         g.usuario = ''
 
 
-@app.route("/")  # Rota raiz, equivalente a página inicial do site (index)
+@app.route("/")  # Rota raiz, equivalente à página inicial do site (index)
 def index():  # Função executada ao acessar a rota raiz
 
     # Se o usuário não está logado redireciona para a página de login
