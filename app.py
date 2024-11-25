@@ -55,22 +55,18 @@ def start():
         # Se o cookie não existe, a variável do usuário está vazia
         g.usuario = ''
 
-
 @app.route("/")  # Rota raiz, equivalente à página inicial do site (index)
 def index():  # Função executada ao acessar a rota raiz
     return mod_index(mysql=mysql)
-
 
 # Rota para a página de cadastro de novo treco
 @app.route('/novo', methods=['GET', 'POST'])
 def novo():  # Função executada para cadastrar novo treco
     return mod_novo(mysql=mysql)
 
-
 @app.route('/edita/<id>', methods=['GET', 'POST'])
 def edita(id):
     return mod_edita(id, mysql=mysql)
-
 
 @app.route('/apaga/<id>')
 def apaga(id):
@@ -80,16 +76,13 @@ def apaga(id):
 def login():
     return mod_login(mysql=mysql)
 
-
 @app.route('/logout')
 def logout():
     return mod_logout()
 
-
 @app.route('/cadastro', methods=['GET', 'POST'])  # Cadastro de usuário
 def cadastro():
     return mod_cadastro(mysql=mysql)
-
 
 @app.route('/novasenha', methods=['GET', 'POST'])  # Pedido de senha de usuário
 def novasenha():
@@ -114,7 +107,6 @@ def page_not_found(e):
         'usuario': g.usuario,
     }
     return render_template('404.html', **pagina), 404
-
 
 # Executa o servidor HTTP se estiver no modo de desenvolvimento
 # Remova / comente essas linhas no modo de produção
