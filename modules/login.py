@@ -1,7 +1,7 @@
 
 import json
 from flask import g, make_response, redirect, render_template, request, url_for
-
+from functions.db_treco import fazer_login
 from functions.geral import datetime_para_string, remove_prefixo
 
 
@@ -23,21 +23,7 @@ def mod_login(mysql):
         # print('\n\n\n FORM:', form, '\n\n\n')
 
         # Pesquisa se os dados existem no banco de dados → usuario
-        sql = '''
-            SELECT *,
-                -- Gera uma versão das datas em pt-BR para salvar no cookie
-                DATE_FORMAT(u_data, '%%d/%%m/%%Y às %%H:%%m') AS u_databr,
-                DATE_FORMAT(u_nascimento, '%%d/%%m/%%Y') AS u_nascimentobr
-            FROM usuario
-            WHERE u_email = %s
-                AND u_senha = SHA1(%s)
-                AND u_status = 'on'
-        '''
-        cur = mysql.connection.cursor()
-        cur.execute(sql, (form['email'], form['senha'],))
-        usuario = cur.fetchone()
-        cur.close()
-
+        usuario = fazer_login(mysql, form)
         # Teste mesa
         # print('\n\n\n DB:', usuario, '\n\n\n')
 

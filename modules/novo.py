@@ -1,6 +1,8 @@
 
 from flask import g, redirect, render_template, request, url_for
 
+from functions.db_treco import novo_treco
+
 def mod_novo(mysql):
 
     # Se o usuário não está logado redireciona para a página de login
@@ -20,24 +22,7 @@ def mod_novo(mysql):
         # Verifica se os dados do formulário chegaram ao back-end
         # print('\n\n\n FORM:', form, '\n\n\n')
 
-        # Grava os dados no banco de dados
-        sql = '''
-            INSERT INTO treco (
-                t_usuario, t_foto, t_nome, t_descricao, t_localizacao
-            ) VALUES (
-                %s, %s, %s, %s, %s
-            )
-        '''
-        cur = mysql.connection.cursor()
-        cur.execute(sql, (
-            g.usuario['id'],
-            form['foto'],
-            form['nome'],
-            form['descricao'],
-            form['localizacao'],
-        ))
-        mysql.connection.commit()
-        cur.close()
+        novo_treco(mysql, form)
 
         sucesso = True
 

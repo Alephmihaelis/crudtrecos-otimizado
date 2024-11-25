@@ -1,5 +1,6 @@
 
 from flask import g, redirect, render_template, url_for
+from functions.db_treco import get_active_trecos
 from functions.geral import calcular_idade
 
 
@@ -12,12 +13,7 @@ def mod_perfil(mysql):
     # Calcula idade do usuário
     g.usuario['idade'] = calcular_idade(g.usuario['nascimento'])
 
-    # Obtém a quantidade de trecos ativos do usuário
-    sql = "SELECT count(t_id) AS total FROM treco WHERE t_usuario = %s AND t_status = 'on'"
-    cur = mysql.connection.cursor()
-    cur.execute(sql, (g.usuario['id'],))
-    row = cur.fetchone()
-    cur.close()
+    row = get_active_trecos(mysql)
 
     # Teste de mesa
     # print('\n\n\n DB', row, '\n\n\n')

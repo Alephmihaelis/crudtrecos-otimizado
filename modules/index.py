@@ -1,5 +1,4 @@
 
-
 from flask import g, redirect, render_template, request, url_for
 from functions.db_treco import get_all_trecos
 
