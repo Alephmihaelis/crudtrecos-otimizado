@@ -24,5 +24,3 @@ def mod_start(mysql):
     else:
         # Se o cookie não existe, a variável do usuário está vazia
         g.usuario = ''
-    
-    return True
