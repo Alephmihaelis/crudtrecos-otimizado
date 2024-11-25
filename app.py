@@ -1,18 +1,19 @@
 # Importa as dependências do aplicativo
-from flask import Flask, g, render_template, request
+from flask import Flask
 from flask_mysqldb import MySQL
-import json
 from modules.apaga import mod_apaga
 from modules.apagausuario import mod_apagausuario
 from modules.cadastro import mod_cadastro
 from modules.edita import mod_edita
 from modules.editaperfil import mod_editaperfil
+from modules.erro import mod_erro
 from modules.index import mod_index
 from modules.login import mod_login
 from modules.logout import mod_logout
 from modules.novasenha import mod_novasenha
 from modules.novo import mod_novo
 from modules.perfil import mod_perfil
+from modules.start import mod_start
 
 # Cria um aplicativo Flask chamado "app"
 app = Flask(__name__)
@@ -31,29 +32,9 @@ app.config['MYSQL_CHARSET'] = 'utf8mb4'
 # Variável de conexão com o MySQL
 mysql = MySQL(app)
 
-
 @app.before_request
 def start():
-
-    # Setup do MySQL para corrigir acentuação
-    cur = mysql.connection.cursor()
-    cur.execute("SET NAMES utf8mb4")
-    cur.execute("SET character_set_connection=utf8mb4")
-    cur.execute("SET character_set_client=utf8mb4")
-    cur.execute("SET character_set_results=utf8mb4")
-
-    # Setup do MySQL para dias da semana e meses em português
-    cur.execute("SET lc_time_names = 'pt_BR'")
-
-    # Lê o cookie do usuário → 'usuario'
-    cookie = request.cookies.get('usuario')
-
-    if cookie:
-        # Se o cookie existe, Converte o valor dele de JSON para dicionário
-        g.usuario = json.loads(cookie)
-    else:
-        # Se o cookie não existe, a variável do usuário está vazia
-        g.usuario = ''
+    return mod_start(mysql=mysql)
 
 @app.route("/")  # Rota raiz, equivalente à página inicial do site (index)
 def index():  # Função executada ao acessar a rota raiz
@@ -102,11 +83,7 @@ def editaperfil():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    pagina = {
-        'titulo': 'CRUDTrecos - Erro 404',
-        'usuario': g.usuario,
-    }
-    return render_template('404.html', **pagina), 404
+    return mod_erro()
 
 # Executa o servidor HTTP se estiver no modo de desenvolvimento
 # Remova / comente essas linhas no modo de produção
