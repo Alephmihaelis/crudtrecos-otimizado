@@ -1,6 +1,5 @@
 
 from flask import g, redirect, render_template, request, url_for
-
 from functions.db_treco import nova_senha
 from functions.geral import gerar_senha
 

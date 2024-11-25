@@ -1,7 +1,5 @@
 
-
 from flask import abort, g, redirect, render_template, request, url_for
-
 
 def mod_edita(id, mysql):
 

@@ -4,7 +4,6 @@ from flask import g, make_response, redirect, render_template, request, url_for
 from functions.db_treco import fazer_login
 from functions.geral import datetime_para_string, remove_prefixo
 
-
 def mod_login(mysql):
 
     # Se o usuário está logado, redireciona para a página de perfil

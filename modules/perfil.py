@@ -3,7 +3,6 @@ from flask import g, redirect, render_template, url_for
 from functions.db_treco import get_active_trecos
 from functions.geral import calcular_idade
 
-
 def mod_perfil(mysql):
 
     # Se o usuário não está logado redireciona para a página de login

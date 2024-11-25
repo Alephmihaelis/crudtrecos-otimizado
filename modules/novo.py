@@ -1,6 +1,5 @@
 
 from flask import g, redirect, render_template, request, url_for
-
 from functions.db_treco import novo_treco
 
 def mod_novo(mysql):
