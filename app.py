@@ -1,8 +1,7 @@
 # Importa as dependências do aplicativo
-from flask import Flask, abort, g, make_response, redirect, render_template, request, url_for
+from flask import Flask, g, render_template, request
 from flask_mysqldb import MySQL
 import json
-from functions.geral import calcular_idade, datetime_para_string, gerar_senha, remove_prefixo
 from modules.apaga import mod_apaga
 from modules.apagausuario import mod_apagausuario
 from modules.cadastro import mod_cadastro
