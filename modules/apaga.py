@@ -1,7 +1,6 @@
 
 from flask import g, redirect, url_for
 
-
 def mod_apaga(id, mysql):
     # Se o usuário não está logado redireciona para a página de login
     if g.usuario == '':
