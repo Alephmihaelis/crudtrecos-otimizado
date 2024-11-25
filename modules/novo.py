@@ -33,5 +33,7 @@ def mod_novo(mysql):
         'sucesso': sucesso,
     }
 
-    # Renderiza o template HTML, passaod valores para ele
+    # Renderiza o template HTML, passando valores para ele
     return render_template('novo.html', **pagina)
+
+    
