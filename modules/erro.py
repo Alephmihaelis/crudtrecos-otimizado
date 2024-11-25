@@ -1,7 +1,6 @@
 
 from flask import g, render_template
 
-
 def mod_erro():
 
     pagina = {
