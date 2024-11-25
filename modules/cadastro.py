@@ -1,6 +1,8 @@
 
 from flask import g, redirect, render_template, request, url_for
 
+from functions.db_treco import cadastra_usuario
+
 
 def mod_cadastro(mysql):
 
@@ -15,37 +17,9 @@ def mod_cadastro(mysql):
 
         form = dict(request.form)
 
-        # Verifica se usuário já está cadastrado, pelo e-mail
-        sql = "SELECT u_id, u_status FROM usuario WHERE u_email = %s AND u_status != 'del'"
-        cur = mysql.connection.cursor()
-        cur.execute(sql, (form['email'],))
-        rows = cur.fetchall()
-        cur.close()
+        cadastra_usuario(mysql, form)
 
-        # print('\n\n\n LEN:', len(rows), '\n\n\n')
-
-        if len(rows) > 0:
-            # Se já está cadastrado
-            if rows[0]['u_status'] == 'off':
-                jatem = 'Este e-mail já está cadastrado para um usuário inativo. Entre em contato para saber mais.'
-            else:
-                jatem = 'Este e-mail já está cadastrado. Tente fazer login ou solicitar uma nova senha.'
-        else:
-            # Se não está cadastrado, inclui os dados do form no banco de dados
-            sql = "INSERT INTO usuario (u_nome, u_nascimento, u_email, u_senha) VALUES (%s, %s, %s, SHA1(%s))"
-            cur = mysql.connection.cursor()
-            cur.execute(
-                sql, (
-                    form['nome'],
-                    form['nascimento'],
-                    form['email'],
-                    form['senha'],
-                )
-            )
-            mysql.connection.commit()
-            cur.close()
-
-            success = True
+        success = True
 
     # Dados, variáveis e valores a serem passados para o template HTML
     pagina = {

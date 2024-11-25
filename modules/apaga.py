@@ -1,6 +1,5 @@
 
 from flask import g, redirect, url_for
-
 from functions.db_treco import apaga_tudo
 
 def mod_apaga(id, mysql):
